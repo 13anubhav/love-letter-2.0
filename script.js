@@ -1,5 +1,6 @@
 
         let isLit = false;
+        let isMusicPlaying = false;
         
         // Touch and click ripple effect
         function createRipple(event) {
@@ -118,7 +119,32 @@
                 }, i * 50);
             }
         }
-        
+
+        // Music toggle function
+        function toggleMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            const musicBtn = document.getElementById('musicBtn');
+
+            if (isMusicPlaying) {
+                audio.pause();
+                musicBtn.textContent = '🎵 Play Music';
+                musicBtn.classList.remove('playing');
+                isMusicPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    musicBtn.textContent = '⏸️ Pause Music';
+                    musicBtn.classList.add('playing');
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.log('Audio play failed:', error);
+                    // Handle autoplay restrictions
+                    alert('Please click the music button to start playing the romantic melody! 🎵');
+                    musicBtn.textContent = '🎵 Play Music';
+                    isMusicPlaying = false;
+                });
+            }
+        }
+
         // Candle click to toggle
         document.getElementById('candle').addEventListener('click', () => {
             if (isLit) {
